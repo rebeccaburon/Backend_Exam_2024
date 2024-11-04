@@ -1,0 +1,73 @@
+###GET ALL Trips
+GET http://localhost:7000/api/trips
+Content-Type: application/json
+
+###GET TRIP BY ID
+GET http://localhost:7000/api/trips/3
+Content-Type: application/json
+
+###CREATE TRIP
+POST http://localhost:7000/api/trips
+Content-Type: application/json
+
+[
+  {
+    "start_time": "09:00",
+    "end_time": "11:00",
+    "start_position": "Mountain Base",
+    "name": "Mountain Hiking Adventure",
+    "price": 120.0,
+    "category": "FOREST"
+  },
+  {
+    "start_time": "10:00",
+    "end_time": "12:30",
+    "start_position": "City Center",
+    "name": "Historical City Tour",
+    "price": 85.0,
+    "category": "CITY"
+  },
+  {
+    "start_time": "15:00",
+    "end_time": "18:00",
+    "start_position": "Harbor",
+    "name": "Sunset River Cruise",
+    "price": 95.0,
+    "category": "SEA"
+  },
+  {
+    "start_time": "08:00",
+    "end_time": "10:30",
+    "start_position": "Desert Entrance",
+    "name": "Desert Safari Experience",
+    "price": 150.0,
+    "category": "SAFARI"
+  }
+]
+
+###Update TRIP
+PUT http://localhost:7000/api/trips/3
+Content-Type: application/json
+
+{
+  "start_time": "13:00",
+  "end_time": "16:00",
+  "start_position": "Forest Trail",
+  "name": "Nature Forest Walk",
+  "price": 60.0,
+  "category": "FOREST"
+}
+
+###DELETING TRIP
+DELETE http://localhost:7000/api/trips/2
+Content-Type: application/json
+
+###Update ADD GUID TO TRIP
+PUT http://localhost:7000/api/trips/3/guides/1
+Content-Type: application/json
+
+###POST Trips and Guids
+POST http://localhost:7000/api/trips/populate
+Content-Type: application/json
+
+
