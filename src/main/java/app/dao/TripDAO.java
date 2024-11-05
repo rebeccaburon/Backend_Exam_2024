@@ -3,6 +3,8 @@ package app.dao;
 import app.dto.TripDTO;
 import app.entities.Guide;
 import app.entities.Trip;
+import app.enums.Category;
+import app.exceptions.ApiException;
 import app.exceptions.JPAException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -12,7 +14,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.List;
 import java.util.Set;
 
-public class TripDAO implements ITripGuideDAO<TripDTO> {
+public class TripDAO implements IDAO<TripDTO>, ITripGuideDAO {
     private EntityManagerFactory emf;
 
     public TripDAO(EntityManagerFactory emf) {
@@ -109,21 +111,28 @@ public class TripDAO implements ITripGuideDAO<TripDTO> {
     }
 
     @Override
-    public void addGuideToTrip(Long tripId, Long guideId) {
+    public TripDTO addGuideToTrip(Long tripId, Long guideId) {
         try (EntityManager em = emf.createEntityManager()) {
             em.getTransaction().begin();
+
             Trip trip = em.find(Trip.class, tripId);
             Guide guide = em.find(Guide.class, guideId);
 
             if (trip != null && guide != null) {
                 trip.setGuide(guide);
+               guide.getTrips().add(trip);
 
                 em.merge(trip);
+                em.merge(guide);
+
                 em.getTransaction().commit();
+                return new TripDTO(trip);
+
             }
         } catch (Exception e) {
-            throw new JPAException(400, e.getMessage());
+            throw new ApiException(400, e.getMessage());
         }
+        return null;
     }
 
     @Override
@@ -140,6 +149,7 @@ public class TripDAO implements ITripGuideDAO<TripDTO> {
             throw new JPAException(400, e.getMessage());
         }
     }
+
 }
 
 

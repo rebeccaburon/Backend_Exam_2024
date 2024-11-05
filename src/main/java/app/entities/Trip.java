@@ -1,5 +1,6 @@
 package app.entities;
 
+import app.dto.GuideDTO;
 import app.dto.TripDTO;
 import app.enums.Category;
 import jakarta.persistence.*;
@@ -30,11 +31,11 @@ public class Trip {
     private double price;
     private Category category;
     @ManyToOne
-    @JoinColumn (name = "trip_id")
+    @JoinColumn(name = "guid_id", nullable = true)
     private Guide guide;
 
 
-    public Trip (TripDTO tripDTO){
+    public Trip(TripDTO tripDTO) {
         this.startTime = tripDTO.getStartTime();
         this.endTime = tripDTO.getEndTime();
         this.startPosition = tripDTO.getStartPosition();
@@ -45,3 +46,4 @@ public class Trip {
     }
 
 }
+

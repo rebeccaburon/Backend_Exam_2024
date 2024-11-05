@@ -1,6 +1,7 @@
 package app.dto;
 
 import app.entities.Guide;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import lombok.Getter;
@@ -25,7 +26,8 @@ public class GuideDTO {
     private String phone;
     @JsonProperty("year_of_experience")
     private int yearOfExperience;
-    @JsonProperty("trips")
+
+    @JsonIgnore // prevent serialization of TripDTO list
     private List<TripDTO> trips;
 
     public GuideDTO (Guide guide){
@@ -35,7 +37,8 @@ public class GuideDTO {
         this.email = guide.getEmail();
         this.phone = guide.getPhone();
         this.yearOfExperience = guide.getYearOfExperience();
-        this.trips = TripDTO.toDTOList(guide.getTrips());
+        //prevent circular reference issues
+        this.trips = null;
 
     }
 

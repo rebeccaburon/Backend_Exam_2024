@@ -5,20 +5,10 @@ import app.dto.TripDTO;
 import java.util.List;
 import java.util.Set;
 
-public interface ITripGuideDAO<T> {
-    T create(T t);
+public interface ITripGuideDAO {
 
-    List<T> getAll();
+    TripDTO addGuideToTrip(Long tripId, Long guideId);
 
-    T getById(Long id);
-
-
-    T update(T t);
-
-    void delete(Long id);
-
-    void addGuideToTrip(Long tripId, Long guideId);
-
-    List<T> getTripsByGuide(Long guideId);
+    List<TripDTO> getTripsByGuide(Long guideId);
 
 }

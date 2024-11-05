@@ -1,6 +1,7 @@
 package app.entities;
 
 import app.dto.GuideDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "Guide")
 public class Guide {
@@ -28,7 +28,8 @@ public class Guide {
     @Column(name = "year_of_experience", nullable = false)
     private int yearOfExperience;
 
-    @OneToMany(mappedBy = "guide")
+    @OneToMany(mappedBy = "guide", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JsonIgnore // This prevents circular reference during serialization
     private List<Trip> trips = new ArrayList<>();
 
 
@@ -40,5 +41,7 @@ public class Guide {
         this.yearOfExperience = guideDTO.getYearOfExperience();
 
     }
+
+
 }
 

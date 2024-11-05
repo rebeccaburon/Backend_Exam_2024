@@ -6,6 +6,24 @@ Content-Type: application/json
 GET http://localhost:7000/api/trips/3
 Content-Type: application/json
 
+### GET TRIPS BY Guide - NEW-ish
+GET http://localhost:7000/api/trips/guides/1
+Content-Type: application/json
+
+
+### GET Items Weight Sum- NEW
+GET http://localhost:7000/api/trips/packing-weight/2
+Content-Type: application/json
+
+
+### GET TRIPS BY CATEGORY - NEW
+GET http://localhost:7000/api/trips/category/SEA
+Content-Type: application/json
+
+### GET TOTAL PRICE FOR TRIPS BY GUIDEID - NEW
+GET http://localhost:7000/api/trips/guides/totalPrice
+Content-Type: application/json
+
 ###CREATE TRIP
 POST http://localhost:7000/api/trips
 Content-Type: application/json

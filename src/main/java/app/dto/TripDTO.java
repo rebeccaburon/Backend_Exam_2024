@@ -27,6 +27,7 @@ public class TripDTO {
     private String name;
     private double price;
     private Category category;
+    private GuideDTO guide;
 
     public TripDTO(Trip trip) {
         this.id = trip.getId();
@@ -36,6 +37,9 @@ public class TripDTO {
         this.name = trip.getName();
         this.price = trip.getPrice();
         this.category = trip.getCategory();
+        this.guide = trip.getGuide() != null ? new GuideDTO(trip.getGuide()) : null;
+
+
     }
 
     public TripDTO(LocalTime startTime, LocalTime endTime, String startPosition, String name, double price, Category category) {

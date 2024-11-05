@@ -20,6 +20,7 @@ public class TripRoutes {
 
             get("/", tripController::getAllTrips);
 
+            // with added additional data from API
             get("/{id}", tripController::getTripById);
 
             post("/", tripController::createTrips);
@@ -31,6 +32,21 @@ public class TripRoutes {
             put("/{tripId}/guides/{guideId}", tripController::addGuidToTrip);
 
             post("/populate", tripController::populateDatabase);
+
+            //adding getTripsByGuid
+            get("/guides/{guideId}", tripController :: getTripsByGuide);
+
+            //adding getTripsByCategory
+            get("/category/{category}", tripController :: getTripsByCategory);
+
+            //adding getTotalPriceByGuid
+            get("/guides/totalPrice", tripController :: getTotalPriceByGuid);
+
+            //adding getPackingItemsWeightSum
+            get("/packing-weight/{id}", tripController :: getPackingItemsWeightSum);
+
+
+
 
 
         };

@@ -1,6 +1,6 @@
 package app.routes;
 
-import app.Populator.Populator;
+import app.populator.Populator;
 import app.config.AppConfig;
 import app.config.HibernateConfig;
 import app.dao.TripDAO;
@@ -16,7 +16,6 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.emptyArray;
-import static org.junit.jupiter.api.Assertions.*;
 
 class TripRoutesTest {
     private static Javalin app;

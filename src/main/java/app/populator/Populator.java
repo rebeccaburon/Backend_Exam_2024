@@ -1,4 +1,4 @@
-package app.Populator;
+package app.populator;
 
 import app.entities.Guide;
 import app.entities.Trip;
