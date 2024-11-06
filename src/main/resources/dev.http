@@ -20,8 +20,8 @@ Content-Type: application/json
 GET http://localhost:7000/api/trips/category/SEA
 Content-Type: application/json
 
-### GET TOTAL PRICE FOR TRIPS BY GUIDEID - NEW
-GET http://localhost:7000/api/trips/guides/totalPrice
+### GET TOTAL PRICE FOR TRIPS BY GUIDE ID - NEW
+GET http://localhost:7000/api/trips/guides/total-price/2
 Content-Type: application/json
 
 ###CREATE TRIP

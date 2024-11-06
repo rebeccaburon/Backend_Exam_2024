@@ -11,9 +11,9 @@ import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityNotFoundException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class TripController {
@@ -91,10 +91,11 @@ public class TripController {
                 //Fetching packing items
                 String category = tripDTO.getCategory().name().toLowerCase();
                 List<?> packingItems = tripService.fetchPackingItems(category);
+                tripDTO.setPackingItems(packingItems);
 
                 ctx.status(200);
                 ctx.json(tripDTO);
-                ctx.json(packingItems);
+//                ctx.json(packingItems);
             } else {
                 throw new ApiException(204, "No CONTEN! Trip  with id " + tripId + " was not found");
             }
@@ -192,32 +193,26 @@ public class TripController {
     //adding getTotalPriceByGuide
     public void getTotalPriceByGuid(Context ctx) {
         try {
-            List<TripDTO> trips = tripDAO.getAll();
-            List<Map<String, Double>> summary = trips.stream()
-                    .filter(trip -> trip.getGuide() != null)
+            List<Map<String, Object>> summary = tripDAO.getAll().stream()
+                    .filter(trip -> trip.getGuide() != null) // Ensure only trips with a guide are processed
                     .collect(Collectors.groupingBy(
-                            trip -> trip.getGuide().getId(),
-                            Collectors.summingDouble(TripDTO::getPrice)
+                            trip -> trip.getGuide().getId(), // Group by guideId
+                            Collectors.summingDouble(TripDTO::getPrice) // Sum prices per guide
                     ))
-                    .entrySet().stream() // Stream the grouped result entries
+                    .entrySet().stream()
                     .map(entry -> {
-                        // Explicitly create the map to match List<Map<String, Double>>
-                        Map<String, Double> guideTotal = Map.of(
-                                "guideId", entry.getKey().doubleValue(), // Convert Long to Double
-                                "totalPrice", entry.getValue()
-                        );
+                        Map<String, Object> guideTotal = new HashMap<>();
+                        guideTotal.put("guideId", entry.getKey()); // Set guideId
+                        guideTotal.put("totalPrice", entry.getValue()); // Set total price for this guide
                         return guideTotal;
                     })
                     .toList();
 
             if (!summary.isEmpty()) {
-                ctx.status(200);
-                ctx.json(summary);
+                ctx.status(200).json(summary);
             } else {
-                throw new ApiException(204, "No Content! No Guids with a total prices was found ");
-
+                throw new ApiException(204, "No Content! No Guides with total prices found.");
             }
-
         } catch (Exception e) {
             throw new ApiException(400, e.getMessage());
         }

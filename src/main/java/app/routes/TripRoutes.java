@@ -2,6 +2,7 @@ package app.routes;
 
 import app.controller.TripController;
 import app.dao.TripDAO;
+import app.security.enums.Role;
 import io.javalin.apibuilder.EndpointGroup;
 import jakarta.persistence.EntityManagerFactory;
 
@@ -17,17 +18,18 @@ public class TripRoutes {
 
     protected EndpointGroup getRoutes() {
         return () -> {
-
-            get("/", tripController::getAllTrips);
+            //Adding security
+            get("/", tripController::getAllTrips, Role.ANYONE);
 
             // with added additional data from API
-            get("/{id}", tripController::getTripById);
+            get("/{id}", tripController::getTripById, Role.ADMIN);
 
-            post("/", tripController::createTrips);
+            //Adding security
+            post("/", tripController::createTrips, Role.ADMIN);
 
-            put("/{id}", tripController::updateTrip);
+            put("/{id}", tripController::updateTrip, Role.ADMIN);
 
-            delete("/{id}", tripController::deleteTrip);
+            delete("/{id}", tripController::deleteTrip, Role.ADMIN);
 
             put("/{tripId}/guides/{guideId}", tripController::addGuidToTrip);
 
@@ -37,16 +39,13 @@ public class TripRoutes {
             get("/guides/{guideId}", tripController :: getTripsByGuide);
 
             //adding getTripsByCategory
-            get("/category/{category}", tripController :: getTripsByCategory);
+            get("/category/{category}", tripController :: getTripsByCategory, Role.USER);
 
             //adding getTotalPriceByGuid
-            get("/guides/totalPrice", tripController :: getTotalPriceByGuid);
+            get("/guides/total-price/{guideId}", tripController :: getTotalPriceByGuid);
 
             //adding getPackingItemsWeightSum
-            get("/packing-weight/{id}", tripController :: getPackingItemsWeightSum);
-
-
-
+            get("/packing-weight/{id}", tripController :: getPackingItemsWeightSum, Role.ADMIN);
 
 
         };

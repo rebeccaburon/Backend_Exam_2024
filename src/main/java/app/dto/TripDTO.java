@@ -11,6 +11,7 @@ import lombok.ToString;
 
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -28,6 +29,8 @@ public class TripDTO {
     private double price;
     private Category category;
     private GuideDTO guide;
+    //added to hold packing items
+    private List<?> packingItems;
 
     public TripDTO(Trip trip) {
         this.id = trip.getId();
